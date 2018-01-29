@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">BitirmeProjesi</string>
+
+
+    //activity_main için
+    <string name="hint_email">Email Adres</string>
+    <string name="hint_parola">Parola</string>
+    <string name="emailParolaGiris">Giriş Yap</string>
+    <string name="emailParolaKayıt">Kayıt Ol</string>
 </resources>
+
