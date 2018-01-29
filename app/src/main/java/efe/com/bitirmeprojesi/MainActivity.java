@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(currentUser == null){
             this.setTitle("kullanıcı boş");
         }else{
-            this.setTitle("kullanıcı var");
+            this.setTitle("kullanıcı giriş yaptı");
         }
 
     }
