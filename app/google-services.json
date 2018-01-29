@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "250411360477",
+    "firebase_url": "https://aliosmantez-c0339.firebaseio.com",
+    "project_id": "aliosmantez-c0339",
+    "storage_bucket": "aliosmantez-c0339.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:250411360477:android:b93e32a8d8f280ad",
+        "android_client_info": {
+          "package_name": "efe.com.bitirmeprojesi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "250411360477-6mvk8skr60vg870h47okltgeb9il7ih1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "efe.com.bitirmeprojesi",
+            "certificate_hash": "6d2aac209bc4e86d792c540196ea3fb7103cfb33"
+          }
+        },
+        {
+          "client_id": "250411360477-3amc1831rgnvutlh982bkdve45dqc0ce.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyARWNdOosSVcz5hgSBOpICg_I7pO07xa24"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "250411360477-3amc1831rgnvutlh982bkdve45dqc0ce.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
