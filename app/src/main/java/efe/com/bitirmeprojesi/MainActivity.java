@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -20,6 +21,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //Arayüzdeki degiskenler
     private EditText mEmailDegisken;
     private EditText mParolaDegisken;
+    private TextView mEmailDogrulama;
+    private TextView mMevcutKullanici;
 
     //FirebaseAuth sınıfının nesne örneği
     private FirebaseAuth mAuth;
@@ -32,11 +35,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //Edit Textler
         mEmailDegisken = findViewById(R.id.edt_email);
         mParolaDegisken = findViewById(R.id.edt_parola);
+        mEmailDogrulama = findViewById(R.id.edt_dogrulandi_mi);
+        mMevcutKullanici = findViewById(R.id.edt_mevcut_kullanici);
 
         //Butonlar
         findViewById(R.id.btn_giris).setOnClickListener(this);
         findViewById(R.id.btn_kayit_ol).setOnClickListener(this);
-        findViewById(R.id.btn_mail_gonder).setOnClickListener(this);
+        findViewById(R.id.btn_çıkış).setOnClickListener(this);
 
         //FirebaseAuth nesne değişkeni örneklendiriliyor.
         mAuth = FirebaseAuth.getInstance();
@@ -73,6 +78,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         }
                     }
                 });
+    }
+
+    private void girisYap(String email, String parola) {
+        if (!formuDogrula()){
+            return;
+        }
+
+
+        mAuth.signInWithEmailAndPassword(email, parola).
+                addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()){
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            arayuzuGuncelle(user);
+                        }else {
+                            Toast.makeText(MainActivity.this, "Giriş Başarısız",
+                                    Toast.LENGTH_SHORT).show();
+                            arayuzuGuncelle(null);
+                        }
+                    }
+        });
     }
 
     private void dogrulamaMailiGonder() {
@@ -134,22 +161,43 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //Giriş yapmış bir kullanıcının olup olmadığını uygulama başlığında belirtiyor.
     private void arayuzuGuncelle(FirebaseUser currentUser) {
         if(currentUser == null){
-            this.setTitle("kullanıcı boş");
+            mMevcutKullanici.setText("null");
+            mEmailDogrulama.setText("null");
+            findViewById(R.id.btn_çıkış).setVisibility(View.INVISIBLE);
+            findViewById(R.id.btn_kayit_ol).setVisibility(View.VISIBLE);
         }else{
-            this.setTitle("kullanıcı giriş yaptı");
+            findViewById(R.id.btn_çıkış).setVisibility(View.VISIBLE);
+            findViewById(R.id.btn_kayit_ol).setVisibility(View.GONE);
+            mMevcutKullanici.setText(currentUser.getEmail());
+            if(currentUser.isEmailVerified()){
+                mEmailDogrulama.setText("Yapıldı");
+            }else{
+                mEmailDogrulama.setText("Yapılmadı");
+            }
         }
 
+    }
+
+    private void cikisYap() {
+        mAuth.signOut();
+        arayuzuGuncelle(null);
     }
 
     @Override
     public void onClick(View view) {
         int i = view.getId();
         if(i == R.id.btn_giris){
-            //girisYap(mEmailDegisken.getText().toString(), mParolaDegisken.getText().toString());
+            girisYap(mEmailDegisken.getText().toString(), mParolaDegisken.getText().toString());
         }else if(i == R.id.btn_kayit_ol){
             hesapOlustur(mEmailDegisken.getText().toString(), mParolaDegisken.getText().toString());
-        }else if(i == R.id.btn_mail_gonder){
-            dogrulamaMailiGonder();
+        }else if(i == R.id.btn_çıkış){
+            cikisYap();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        cikisYap();
     }
 }

@@ -7,5 +7,6 @@
     <string name="hint_parola">Parola</string>
     <string name="emailParolaGiris">Giriş Yap</string>
     <string name="emailParolaKayıt">Kayıt Ol</string>
+    <string name="emailparola_çıkış">Çıkış Yap</string>
 </resources>
 
